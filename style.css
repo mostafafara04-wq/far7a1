@@ -1,0 +1,847 @@
+/* Custom Design System & Tokens */
+:root {
+    --bg-color: #f6f1e5;          /* Warm parchment paper background */
+    --card-bg: #fffbf4;           /* Warm soft white card background */
+    --burgundy-color: #7b1e28;    /* Premium vintage burgundy */
+    --burgundy-light: #ad3b48;    /* Lighter burgundy for interactive states */
+    --gold-color: #bd9b53;        /* Antique gold */
+    --gold-light: #ecdcb9;        /* Warm gold tint */
+    --text-color: #3e322d;        /* Deep charcoal brown */
+    --text-light: #7c6861;        /* Soft sepia brown for subtitles */
+    --border-color: rgba(189, 155, 83, 0.4);
+    --border-color-light: rgba(189, 155, 83, 0.15);
+    --shadow-premium: 0 20px 40px rgba(62, 50, 45, 0.12);
+    --shadow-soft: 0 8px 24px rgba(62, 50, 45, 0.06);
+    --radius-lg: 16px;
+    --radius-md: 8px;
+    --font-arabic-serif: 'Amiri', serif;
+    --font-arabic-sans: 'Cairo', sans-serif;
+    --font-arabic-display: 'Reem Kufi', sans-serif;
+    --font-english-display: 'Cinzel', serif;
+    --font-english-handwriting: 'Great Vibes', cursive;
+}
+
+/* Global Reset & Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #e5dec9; /* Soft table cloth/ambient background */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(189, 155, 83, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(123, 30, 40, 0.04) 0%, transparent 40%);
+    font-family: var(--font-arabic-sans);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px 10px;
+    overflow-x: hidden;
+}
+
+/* Canvas for falling petals */
+#petalsCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Audio Player Control Styling */
+.audio-control-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2000;
+}
+
+.audio-toggle-btn {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--card-bg);
+    border: 2px solid var(--gold-color);
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.audio-toggle-btn:hover {
+    transform: scale(1.08);
+}
+
+.music-note-icon {
+    font-size: 16px;
+    color: var(--burgundy-color);
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.disc-spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-radial-gradient(circle, #3a2e2b, #3a2e2b 2px, #261f1d 4px, #261f1d 6px);
+    opacity: 0;
+    border-radius: 50%;
+    z-index: 1;
+    transition: opacity 0.5s ease;
+}
+
+.disc-spinner::after {
+    content: '';
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    width: 30%;
+    height: 30%;
+    background-color: var(--gold-color);
+    border-radius: 50%;
+}
+
+/* Audio active states */
+.audio-toggle-btn.playing .music-note-icon {
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.audio-toggle-btn.playing .disc-spinner {
+    opacity: 0.9;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* Scroll Animation classes */
+.animate-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animate-scroll.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Core Container Wrapper */
+.invitation-wrapper {
+    width: 100%;
+    max-width: 580px;
+    background-color: var(--bg-color);
+    border: 3px double var(--gold-color);
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: var(--shadow-premium);
+    position: relative;
+    z-index: 5;
+    margin-bottom: 40px;
+}
+
+/* Beautiful vintage corner decorations */
+.invitation-wrapper::before,
+.invitation-wrapper::after,
+.invitation-wrapper > .hero-section::before,
+.invitation-wrapper > .hero-section::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Ornate Corners using border shapes */
+.invitation-wrapper::before {
+    top: 10px; right: 10px;
+    border-top: 3px solid var(--gold-color);
+    border-right: 3px solid var(--gold-color);
+}
+.invitation-wrapper::after {
+    top: 10px; left: 10px;
+    border-top: 3px solid var(--gold-color);
+    border-left: 3px solid var(--gold-color);
+}
+
+/* Card Container Base */
+.card-container {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px 20px;
+    position: relative;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 30px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Ornate frames inside cards */
+.vintage-outer-border {
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid var(--gold-color);
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.vintage-inner-border {
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 2px solid var(--gold-color);
+    border-radius: 8px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Sections Shared Styles */
+.section-container {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.section-title {
+    font-family: var(--font-arabic-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--burgundy-color);
+    margin-bottom: 8px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background-color: var(--gold-color);
+    margin: 6px auto 0;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+
+/* HERO SECTION CUSTOM DESIGNS */
+.hero-section {
+    padding: 50px 20px;
+}
+
+.floral-header {
+    margin-bottom: 15px;
+}
+
+.vintage-separator {
+    width: 120px;
+    height: auto;
+}
+
+.save-the-date {
+    font-family: var(--font-english-display);
+    font-size: 16px;
+    letter-spacing: 5px;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Couple Picture Frame */
+.couple-frame-wrapper {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 50% 50% 0 0; /* Dome frame shape */
+    background-color: var(--bg-color);
+    margin-bottom: 30px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.couple-frame {
+    width: 220px;
+    height: 280px;
+    border-radius: 50% 50% 0 0;
+    border: 2px solid var(--gold-color);
+    overflow: hidden;
+    position: relative;
+    background-color: #fefcf7;
+}
+
+.couple-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.couple-frame-wrapper:hover .couple-image {
+    transform: scale(1.05);
+}
+
+/* Names styling */
+.couple-names-en {
+    font-family: var(--font-english-display);
+    font-size: 32px;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.couple-names-ar {
+    font-family: var(--font-arabic-serif);
+    font-size: 38px;
+    font-weight: bold;
+    color: var(--burgundy-color);
+    margin-bottom: 20px;
+}
+
+.vintage-divider {
+    color: var(--gold-color);
+    font-size: 18px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vintage-divider::before,
+.vintage-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--border-color);
+    max-width: 80px;
+    margin: 0 15px;
+}
+
+.invitation-intro {
+    font-family: var(--font-arabic-serif);
+    font-size: 19px;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    padding: 0 10px;
+    text-align: center;
+    line-height: 1.8;
+}
+
+/* Highlight badge */
+.main-details-badge {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 25px;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 700;
+    color: var(--burgundy-color);
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.05);
+    font-size: 15px;
+}
+
+.separator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--gold-color);
+}
+
+/* COUNTDOWN SECTION */
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.timer-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    min-width: 75px;
+    padding: 12px 8px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    border-bottom: 3px solid var(--gold-color);
+    transition: transform 0.3s ease;
+}
+
+.timer-box:hover {
+    transform: translateY(-4px);
+}
+
+.time-val {
+    display: block;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--burgundy-color);
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.time-label {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* PROGRAM & TIMELINE SECTION */
+.events-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 5px;
+}
+
+.event-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 25px 20px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-premium);
+    border-color: var(--gold-color);
+}
+
+.event-card.highlight-card {
+    border: 2px solid var(--gold-color);
+    background-image: linear-gradient(135deg, var(--card-bg) 0%, #fffefe 100%);
+}
+
+.event-card.highlight-card::before {
+    content: 'الحدث الأهم';
+    position: absolute;
+    top: 15px;
+    right: -25px;
+    background-color: var(--gold-color);
+    color: #fff;
+    font-size: 10px;
+    padding: 4px 25px;
+    transform: rotate(45deg);
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.event-icon {
+    font-size: 32px;
+    color: var(--burgundy-color);
+    margin-bottom: 12px;
+}
+
+.event-card h4 {
+    font-size: 20px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-family: var(--font-arabic-display);
+}
+
+.event-date, .event-location, .event-time {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.event-date i, .event-location i, .event-time i {
+    color: var(--gold-color);
+}
+
+.event-note {
+    font-size: 13px;
+    color: var(--text-color);
+    font-style: italic;
+    margin: 15px 0 20px 0;
+    line-height: 1.5;
+}
+
+/* BUTTONS */
+.btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-family: var(--font-arabic-sans);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: var(--burgundy-color);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(123, 30, 40, 0.25);
+}
+
+.btn-primary:hover {
+    background-color: var(--burgundy-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(123, 30, 40, 0.35);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1.5px solid var(--gold-color);
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--gold-light);
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 6px 15px;
+    font-size: 12px;
+}
+
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+/* LOCATIONS MAPS SECTION */
+.locations-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 15px;
+}
+
+.location-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+}
+
+.location-box h4 {
+    font-size: 18px;
+    color: var(--burgundy-color);
+    margin-bottom: 8px;
+}
+
+.loc-detail {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+/* Beautiful Interactive Map Placeholders */
+.map-placeholder {
+    width: 100%;
+    height: 180px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-color-light);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.06);
+}
+
+.map-artwork {
+    width: 100%;
+    height: 100%;
+    background-color: #f3edd9;
+    background-size: 20px 20px;
+    background-image: 
+        linear-gradient(to right, rgba(189, 155, 83, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(189, 155, 83, 0.08) 1px, transparent 1px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Custom map details art */
+.groom-house-art::before, .hall-art::before {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 2px;
+    background-color: var(--gold-light);
+    transform: rotate(15deg);
+}
+
+.groom-house-art::after, .hall-art::after {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 2px;
+    background-color: var(--gold-light);
+    transform: rotate(-30deg);
+}
+
+.pin-bounce {
+    font-size: 34px;
+    color: var(--burgundy-color);
+    z-index: 2;
+    animation: pinBounce 1.8s infinite ease-in-out;
+}
+
+@keyframes pinBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.map-artwork span {
+    font-weight: 700;
+    color: var(--text-color);
+    z-index: 2;
+    font-size: 14px;
+}
+
+.map-link {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    white-space: nowrap;
+    opacity: 0.95;
+}
+
+.map-link:hover {
+    transform: translateX(-50%) translateY(-2px);
+    opacity: 1;
+}
+
+/* RSVP SECTION */
+.rsvp-section {
+    position: relative;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 35px 25px;
+    box-shadow: var(--shadow-premium);
+    overflow: hidden;
+}
+
+.rsvp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    font-family: var(--font-arabic-sans);
+    font-size: 13px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-light);
+    opacity: 0.6;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    border-color: var(--burgundy-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(123, 30, 40, 0.08);
+}
+
+/* Form success message popup container */
+.form-success-message {
+    display: none;
+    text-align: center;
+    padding: 30px 10px;
+}
+
+.success-icon {
+    font-size: 55px;
+    color: #2a9d8f;
+    margin-bottom: 15px;
+    animation: scaleUp 0.5s ease-out;
+}
+
+@keyframes scaleUp {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.form-success-message h4 {
+    font-size: 22px;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    font-family: var(--font-arabic-display);
+}
+
+.form-success-message p {
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+/* GUESTBOOK SECTION */
+.wishes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: right;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 5px;
+    /* Custom Scrollbar */
+}
+
+.wishes-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.wishes-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wishes-list::-webkit-scrollbar-thumb {
+    background-color: var(--gold-color);
+    border-radius: 10px;
+}
+
+.wish-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--radius-md);
+    padding: 15px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    border-right: 3px solid var(--gold-color);
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    0% { transform: translateX(20px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+.wish-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.wish-author {
+    font-weight: 700;
+    color: var(--burgundy-color);
+    font-size: 14px;
+}
+
+.wish-time {
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.wish-text {
+    font-size: 13px;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.empty-wishes {
+    background-color: var(--card-bg);
+    border: 1px dashed var(--border-color);
+    padding: 30px 15px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    color: var(--text-light);
+    font-size: 13px;
+}
+
+/* FOOTER SECTION */
+.footer-section {
+    padding-top: 30px;
+    text-align: center;
+}
+
+.footer-vintage-deco {
+    margin-bottom: 12px;
+}
+
+.thank-you-text {
+    font-family: var(--font-english-handwriting);
+    font-size: 42px;
+    color: var(--burgundy-color);
+    margin-bottom: 5px;
+}
+
+.copyright {
+    font-size: 10px;
+    color: var(--text-light);
+}

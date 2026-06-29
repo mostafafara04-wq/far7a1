@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف احمد ومنة | Wedding Invitation</title>
+    
+    <!-- Meta tags for SEO & Social Sharing -->
+    <meta name="description" content="نشرّف بدعوتكم لحضور حفل زفاف احمد ومنة يوم 10 سبتمبر 2026 في قاعة الولاء. شاركونا فرحتنا!">
+    <meta property="og:title" content="دعوة زفاف احمد ومنة">
+    <meta property="og:description" content="نشرّف بدعوتكم لحضور حفل زفاف احمد ومنة يوم 10 سبتمبر 2026 في قاعة الولاء. شاركونا فرحتنا!">
+    <meta property="og:image" content="wedding_couple.png">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;600;700;800&family=Cinzel:wght@400;600;700;900&family=Great+Vibes&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Music Player -->
+    <div class="audio-control-container" id="audioPlayerContainer">
+        <button class="audio-toggle-btn" id="audioToggleBtn" aria-label="تشغيل/إيقاف الموسيقى">
+            <span class="music-note-icon"><i class="fas fa-music"></i></span>
+            <span class="disc-spinner" id="discSpinner"></span>
+        </button>
+        <audio id="bgMusic" loop>
+            <source src="https://www.mfiles.co.uk/mp3-downloads/chopin-nocturne-op9-no2.mp3" type="audio/mp3">
+            متصفحك لا يدعم تشغيل الموسيقى.
+        </audio>
+    </div>
+
+    <!-- Canvas for falling petals/particles -->
+    <canvas id="petalsCanvas"></canvas>
+
+    <!-- Main Invitation Page Wrapper -->
+    <main class="invitation-wrapper">
+        
+        <!-- Header Banner & Hero Card -->
+        <section class="hero-section card-container">
+            <div class="vintage-outer-border"></div>
+            <div class="vintage-inner-border"></div>
+            
+            <div class="hero-content">
+                <!-- Floral Top Graphic -->
+                <div class="floral-header">
+                    <svg viewBox="0 0 100 30" class="vintage-separator">
+                        <path d="M 10,15 C 30,5 40,25 50,15 C 60,5 70,25 90,15" fill="none" stroke="var(--gold-color)" stroke-width="0.8"/>
+                        <circle cx="50" cy="15" r="3" fill="var(--burgundy-color)"/>
+                        <path d="M 45,15 Q 50,10 55,15 Q 50,20 45,15 Z" fill="var(--gold-color)"/>
+                    </svg>
+                </div>
+                
+                <span class="save-the-date">SAVE THE DATE</span>
+                
+                <!-- Couple Illustration in Vintage Frame -->
+                <div class="couple-frame-wrapper">
+                    <div class="couple-frame">
+                        <img src="wedding_couple.png" alt="Ahmed & Menna Illustration" class="couple-image">
+                    </div>
+                </div>
+                
+                <!-- Couple Names -->
+                <h1 class="couple-names-en">Ahmed & Menna</h1>
+                <h2 class="couple-names-ar">احمد & منة</h2>
+
+                <div class="vintage-divider">
+                    <span class="star-accent"><i class="fa-solid fa-feather-pointed"></i></span>
+                </div>
+
+                <p class="invitation-intro">
+                    بقلوب تملؤها الفرحة والبهجة، وتتراقص حباً بجميل الحضور، ندعوكم لمشاركتنا فرحة العمر وتوثيق أجمل لحظات حياتنا.
+                </p>
+                
+                <!-- Major Highlights -->
+                <div class="main-details-badge">
+                    <span class="date-badge">10.09.2026</span>
+                    <span class="separator-dot"></span>
+                    <span class="hall-badge">قاعة الولاء</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown-section section-container">
+            <h3 class="section-title">المتبقي على الفرحة</h3>
+            <div class="countdown-timer" id="countdownTimer">
+                <div class="timer-box">
+                    <span class="time-val" id="days">00</span>
+                    <span class="time-label">أيام</span>
+                </div>
+                <div class="timer-box">
+                    <span class="time-val" id="hours">00</span>
+                    <span class="time-label">ساعات</span>
+                </div>
+                <div class="timer-box">
+                    <span class="time-val" id="minutes">00</span>
+                    <span class="time-label">دقائق</span>
+                </div>
+                <div class="timer-box">
+                    <span class="time-val" id="seconds">00</span>
+                    <span class="time-label">ثواني</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details & Timeline Section -->
+        <section class="details-section section-container">
+            <h3 class="section-title">برنامج الحفل</h3>
+            
+            <div class="events-timeline">
+                <!-- Henna Event Card -->
+                <div class="event-card animate-scroll">
+                    <div class="event-icon"><i class="fa-solid fa-hands-holding-child"></i></div>
+                    <h4>حفل الحناء</h4>
+                    <p class="event-date"><i class="fa-regular fa-calendar-days"></i> الأربعاء، 7 سبتمبر 2026 (9/7)</p>
+                    <p class="event-location"><i class="fa-solid fa-house-chimney"></i> أمام منزل العريس</p>
+                    <p class="event-note">بانتظاركم لنوقد شموع الفرح ونرسم بالحنّاء أجمل أمنياتنا.</p>
+                    <a href="#locationSection" class="btn-secondary btn-sm scroll-to">عرض الموقع <i class="fa-solid fa-map-location-dot"></i></a>
+                </div>
+
+                <!-- Wedding Event Card -->
+                <div class="event-card highlight-card animate-scroll">
+                    <div class="event-icon"><i class="fa-solid fa-ring"></i></div>
+                    <h4>حفل الزفاف</h4>
+                    <p class="event-date"><i class="fa-regular fa-calendar-days"></i> الخميس، 10 سبتمبر 2026 (10/9)</p>
+                    <p class="event-location"><i class="fa-solid fa-building-columns"></i> قاعة الولاء</p>
+                    <p class="event-time"><i class="fa-regular fa-clock"></i> الساعة الثامنة مساءً</p>
+                    <p class="event-note">حضوركم يكتمل به بهاء ليلتنا وتزدان به طرحتنا البيضاء.</p>
+                    <a href="#locationSection" class="btn-secondary btn-sm scroll-to">عرض الموقع <i class="fa-solid fa-map-location-dot"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Locations Section -->
+        <section class="location-section section-container" id="locationSection">
+            <h3 class="section-title">مواقع الحفل</h3>
+            <p class="section-subtitle">انقر على الخريطة للوصول إلى اتجاهات GPS مباشرة</p>
+            
+            <div class="locations-grid">
+                <!-- Location 1: Groom's House -->
+                <div class="location-box animate-scroll">
+                    <h4>موقع حفل الحناء</h4>
+                    <p class="loc-detail"><i class="fa-solid fa-location-dot"></i> أمام منزل العريس - 7 سبتمبر</p>
+                    <div class="map-placeholder">
+                        <!-- Stylized Map Canvas & Real Button -->
+                        <div class="map-artwork groom-house-art">
+                            <i class="fa-solid fa-map-pin pin-bounce"></i>
+                            <span>منزل العريس</span>
+                        </div>
+                        <a href="https://maps.google.com/?q=Groom+House+Location" target="_blank" class="btn-primary map-link">
+                            فتح في خرائط جوجل <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Location 2: San Remo Hall -->
+                <div class="location-box animate-scroll">
+                    <h4>موقع قاعة الولاء</h4>
+                    <p class="loc-detail"><i class="fa-solid fa-location-dot"></i> قاعة الولاء - 10 سبتمبر</p>
+                    <div class="map-placeholder">
+                        <!-- Stylized Map Canvas & Real Button -->
+                        <div class="map-artwork hall-art">
+                            <i class="fa-solid fa-map-pin pin-bounce"></i>
+                            <span>قاعة الولاء</span>
+                        </div>
+                        <a href="https://maps.google.com/?q=San+Remo+Hall" target="_blank" class="btn-primary map-link">
+                            فتح في خرائط جوجل <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Form Section -->
+        <section class="rsvp-section section-container">
+            <div class="vintage-outer-border"></div>
+            <h3 class="section-title">تأكيد الحضور (RSVP)</h3>
+            <p class="section-subtitle">يسعدنا أن تشاركونا فرحتنا، يرجى تأكيد حضوركم قبل تاريخ الحفل</p>
+
+            <form class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <label for="guestName">الاسم الكريم</label>
+                    <input type="text" id="guestName" required placeholder="أدخل اسمك الكامل هنا">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="attendanceStatus">هل ستشرفنا بالحضور؟</label>
+                        <select id="attendanceStatus" required>
+                            <option value="" disabled selected>اختر الإجابة</option>
+                            <option value="yes">بكل سرور، سأحضر</option>
+                            <option value="no">أعتذر عن الحضور</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="guestsCountGroup">
+                        <label for="guestsCount">عدد المرافقين</label>
+                        <select id="guestsCount">
+                            <option value="1">شخص واحد (أنا فقط)</option>
+                            <option value="2">شخصين</option>
+                            <option value="3">3 أشخاص</option>
+                            <option value="4">4 أشخاص</option>
+                            <option value="5">5 أشخاص وأكثر</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="guestMessage">رسالة تهنئة للعروسين (اختياري)</label>
+                    <textarea id="guestMessage" rows="3" placeholder="اكتب تهنئتك الجميلة للعروسين هنا..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary btn-block">تأكيد الحضور <i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+
+            <div class="form-success-message" id="formSuccessMessage">
+                <i class="fa-regular fa-circle-check success-icon"></i>
+                <h4>تم تسجيل حضورك بنجاح!</h4>
+                <p>شكراً لمشاركتنا هذه اللحظات السعيدة. ننتظرك بكل حب.</p>
+            </div>
+        </section>
+
+        <!-- Live Wishes Guestbook -->
+        <section class="guestbook-section section-container">
+            <h3 class="section-title">تهاني المهنئين</h3>
+            <p class="section-subtitle">شاركونا تمنياتكم الطيبة ودعواتكم الصادقة للعروسين</p>
+
+            <div class="wishes-list" id="wishesList">
+                <!-- Wishes will be populated here via JavaScript -->
+                <div class="empty-wishes">
+                    <p>كن أول من يكتب تهنئة للعروسين بالأسفل في نموذج تأكيد الحضور!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-section">
+            <div class="footer-vintage-deco">
+                <svg viewBox="0 0 100 20" class="vintage-separator">
+                    <path d="M 10,5 C 30,15 40,5 50,15 C 60,5 70,15 90,5" fill="none" stroke="var(--gold-color)" stroke-width="0.8"/>
+                    <circle cx="50" cy="15" r="2.5" fill="var(--burgundy-color)"/>
+                </svg>
+            </div>
+            <p class="thank-you-text">Ahmed & Menna</p>
+            <p class="copyright">&copy; 2026 جميع الحقوق محفوظة لقصة حب احمد ومنة.</p>
+        </footer>
+
+    </main>
+
+    <!-- JS Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
